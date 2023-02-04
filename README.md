@@ -2,6 +2,6 @@
 
 ## Features
 
-- ### Face Detection
+<!-- Redirect to Face_Detection/face_det.py -->
 
-- ### Counting Faces
+- ### [Face Detection & Counting Faces](blob/main/Face_Detection/face_det.py)
