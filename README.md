@@ -1,7 +1,7 @@
 # Codebase for FCSD Experential Learning
 
-## Features
+## Contains:
 
-<!-- Redirect to Face_Detection/face_det.py -->
+- ### [Basic Camera Connection](Trying_IP_Camera/connection.py)
 
 - ### [Face Detection & Counting Faces](Face_Detection/face_det.py)
