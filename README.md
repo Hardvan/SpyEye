@@ -4,4 +4,4 @@
 
 <!-- Redirect to Face_Detection/face_det.py -->
 
-- ### [Face Detection & Counting Faces](blob/main/Face_Detection/face_det.py)
+- ### [Face Detection & Counting Faces](Face_Detection/face_det.py)
