@@ -16,11 +16,16 @@ names = {1: "Hardik", 2: "Karan", 3: "Abhishek",
          4: "Akshaja", 5: "Harsha", 6: "Aditya",
          7: "Gokul", 8: "Rohith", 9: "Jayanth"}
 
-for i in range(1, 1+1):  # ? Change the range to the number of people you want to recognize
-    face = cv2.imread(f'./images/face{i}.jpeg', 0)
+
+for i in range(1):  # ? Change the range to the number of people you want to recognize
+
+    slno = i+1
+
+    face = cv2.imread(f'./images/face{slno}.jpeg', 0)
+    face = cv2.resize(face, (100, 100))
 
     faces.append(face)
-    labels.append(i)
+    labels.append(slno)
 
 face_recognizer.train(faces, np.array(labels))
 
@@ -45,7 +50,7 @@ while True:
 
         # Display the name of the person on the frame
         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
-        name = names[label]
+        name = names.get(label, "Unknown")
         cv2.putText(frame, f'Person {name} ({confidence:.2f}%)', (x, y-10),
                     cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
