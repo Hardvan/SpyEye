@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import time
 
 # Load the cascade classifier
 face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
@@ -46,12 +47,21 @@ face_recognizer, names = getFaceRecognizer()
 # Open the webcam
 cap = cv2.VideoCapture(0)
 
+# Set the resolution of the webcam
+cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+
 while True:
 
     ret, frame = cap.read()
 
     # Convert the frame to grayscale
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+    # Draw a straight line at the top of the frame
+    line_y = 200
+    cv2.line(frame, pt1=(0, line_y), pt2=(1280, line_y),
+             color=(255, 255, 255), thickness=2)
 
     # Detect faces in the grayscale frame
     faces = face_cascade.detectMultiScale(
@@ -74,6 +84,20 @@ while True:
     count = len(faces)
     cv2.putText(frame, f"Number of faces: {count}", (10, 50),
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
+
+    # If any face crosses the line, display a warning
+    for (x, y, w, h) in faces:
+        if y < line_y:
+            cv2.putText(frame, "WARNING: Face crossed line!", (10, 100),
+                        cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
+
+            # Save the frame
+            cv2.imwrite("./saved/face_crossed_line.jpg", frame)
+
+            # Log the details in details.txt file
+            with open("./saved/details.txt", "a") as f:
+                f.write(
+                    f"Face crossed line at ({x}, {y})\nTime: {time.ctime()}\n\n")
 
     cv2.imshow("Face Recognition", frame)
 
