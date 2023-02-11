@@ -23,7 +23,7 @@ def detectFaces(image):
 
 # Load the cascade classifier
 face_cascade = cv2.CascadeClassifier(
-    './haarcascade_frontalface_default.xml')
+    '../XML_Files/haarcascade_frontalface_default.xml')
 
 
 # Initialize the camera

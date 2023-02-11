@@ -3,7 +3,8 @@ import numpy as np
 import time
 
 # Load the cascade classifier
-face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+face_cascade = cv2.CascadeClassifier(
+    "../XML_Files/haarcascade_frontalface_default.xml")
 
 
 def getFaceRecognizer():
