@@ -7,3 +7,5 @@
 - ### [Face Detection & Counting Faces](2_Face_Detection/face_det.py)
 
 - ### [Face Recognition](3_Face_Recognition/face_reg.py)
+
+- ### [Intruder Detection](4_Intruder_Detection/intruder_det.py)
