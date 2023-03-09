@@ -4,6 +4,15 @@ import time
 from datetime import datetime
 import os
 
+"""
+    ? Extra Features:
+    * Added cropping of the face from the frame and saving it in a new folder.
+    * Added additional checks to ensure that the face is big enough before saving it.
+    * Dynamically update the faces list with the faces which are big enough.
+    * Added the popup window to display the saved face images.
+
+"""
+
 # Load the cascade classifier
 face_cascade = cv2.CascadeClassifier(
     "../XML_Files/haarcascade_frontalface_default.xml")
