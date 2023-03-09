@@ -3,6 +3,7 @@ import numpy as np
 import time
 from datetime import datetime
 import os
+import threading
 
 # Custom modules
 import whatsapp_message
@@ -30,7 +31,7 @@ if delete_saved_images:
 
 
 # Set the time interval between each face detection
-time_interval = 4.2
+time_interval = 2
 last_save_time = time.time()
 
 
@@ -64,9 +65,14 @@ def saveImage(frame, x, y, w, h, time):
     # Display the saved face image in a new window
     cv2.imshow(f"Face {current_time}", face)
 
-    # Send the image to whatsapp
-    whatsapp_message.UploadImage(
-        f"./saved/face_{current_time}.jpg", current_time)
+    # Send the image to whatsapp using a thread
+    t = threading.Thread(target=ThreadSendImage, args=(
+        f"./saved/face_{current_time}.jpg", current_time))
+    t.start()
+
+
+def ThreadSendImage(path, timestamp):
+    whatsapp_message.UploadImage(path, timestamp)
 
 
 def drawRectangles(frame, faces):
