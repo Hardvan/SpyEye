@@ -52,6 +52,10 @@ def saveImage(frame, x, y, w, h, time):
     # Crop the face from the frame
     face = frame[y-100:y+h+100, x-100:x+w+100]  # 100 pixels extra on each side
 
+    # If image becomes empty, return
+    if face.size == 0:
+        return
+
     # Write the time on the bottom of face image and save it
     face = cv2.putText(face, time, (10, y+h-60), cv2.FONT_HERSHEY_SIMPLEX,
                        0.5, (0, 255, 255), 2, cv2.LINE_AA)
