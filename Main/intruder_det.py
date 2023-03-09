@@ -36,8 +36,8 @@ last_save_time = time.time()
 
 
 def saveImage(frame, x, y, w, h, time):
-    """Save the face image with the timestamp on the bottom of the image
-    and display it in a new window.
+    """Save the face image with the timestamp on the bottom of the image,
+    display it in a new window and send it to WhatsApp.
 
     Args:
         frame: The original frame from which the face is cropped.
@@ -72,6 +72,9 @@ def saveImage(frame, x, y, w, h, time):
 
 
 def ThreadSendImage(path, timestamp):
+    """Send the image to WhatsApp using a thread.
+    """
+
     whatsapp_message.UploadImage(path, timestamp)
 
 
