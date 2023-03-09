@@ -29,6 +29,11 @@ if delete_saved_images:
         os.remove(f"./saved/{file}")
 
 
+# Set the time interval between each face detection
+time_interval = 4.2
+last_save_time = time.time()
+
+
 def saveImage(frame, x, y, w, h, time):
     """Save the face image with the timestamp on the bottom of the image
     and display it in a new window.
@@ -103,7 +108,11 @@ def checkLineCrossing(faces, frame, line_y):
             cv2.putText(frame, "WARNING: Face crossed line!", (10, 100),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
-            saveImage(frame, x, y, w, h, time.ctime())
+            # Save the face image only if the time interval has passed
+            global last_save_time
+            if time.time() - last_save_time >= time_interval:
+                saveImage(frame, x, y, w, h, time.ctime())
+                last_save_time = time.time()
 
 
 # Open the webcam
