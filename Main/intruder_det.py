@@ -53,15 +53,12 @@ def saveImage(frame, x, y, w, h, time):
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
     # Save the face image
-    try:
-        cv2.imwrite(f"./saved/face_{current_time}.jpg", face)
+    cv2.imwrite(f"./saved/face_{current_time}.jpg", face)
 
-        # Display the saved face image in a new window
-        cv2.imshow(f"Face {current_time}", face)
+    # Display the saved face image in a new window
+    cv2.imshow(f"Face {current_time}", face)
 
-    except:
-        pass
-
+    # Send the image to whatsapp
     UploadImage(f"./saved/face_{current_time}.jpg", current_time)
 
 
@@ -104,14 +101,14 @@ def SendMessage(object_id, timing):
         'Content-Type': 'application/json'
     }
 
-    karan = "7348911401"
     hardik = "9845072575"
+    karan = "7348911401"
 
     data = {
         "messaging_product": "whatsapp",
         "preview_url": False,
         "recipient_type": "individual",
-        "to": f"91{karan}",  # Start with 91 for Indian numbers
+        "to": f"91{hardik}",  # Start with 91 for Indian numbers
         "type": "image",
         "image": {
             "id": object_id,
