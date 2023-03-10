@@ -118,7 +118,7 @@ def checkLineCrossing(faces, frame, line_y):
 
         # Check if the face crossed the line
         if y < line_y:
-            cv2.putText(frame, "WARNING: Face crossed line!", (10, 100),
+            cv2.putText(frame, "WARNING: Face crossed line!", (10, 720 - 100),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
             # ? Save the face image only if the time interval has passed
@@ -142,6 +142,8 @@ while True:
 
     ret, frame = cap.read()
 
+    frame_copy = frame.copy()  # To save cropped face image without white line and rectangle
+
     # Draw a straight line at the top of the frame
     cv2.line(frame, pt1=(0, line_y), pt2=(1280, line_y),
              color=(255, 255, 255), thickness=2)
@@ -153,7 +155,7 @@ while True:
     drawRectangles(frame, faces)
 
     # If any face crosses the line, display a warning
-    checkLineCrossing(faces, frame, line_y)
+    checkLineCrossing(faces, frame_copy, line_y)
 
     cv2.imshow("Face Recognition", frame)
 
