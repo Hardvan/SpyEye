@@ -57,7 +57,7 @@ def saveImage(frame, x, y, w, h, time):
         return
 
     # Write the timestamp on the bottom of face image and save it
-    face = cv2.putText(face, time, (10, y+h-60), cv2.FONT_HERSHEY_SIMPLEX,
+    face = cv2.putText(face, time, (10, y+h), cv2.FONT_HERSHEY_SIMPLEX,
                        0.5, (0, 255, 255), 2, cv2.LINE_AA)
 
     # Convert the current time to a string
