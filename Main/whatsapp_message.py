@@ -12,7 +12,7 @@ def UploadImage(path, timestamp):
     }
 
     headers = {
-        "Authorization": f"Bearer EABU7YlckmlkBAE2S1RepUkns2E3Y64GPk2wOoOZAvom9SjBItNdfOQiBRmBW5tndWlKGdawX4zrPqP4PPclQicKQYwoVV92ZCZANrLErFGZCiDZAX5UYxxDOQJyfV0FaFNUK8bc20xAkdARWDMANyTVB09ZByaoPvZCIbP7UotIXyhWJJMYS35zYa5ZAmq41PSctZAS7GSCZC09exjIwcpNJvB"
+        "Authorization": f"Bearer EABU7YlckmlkBALYtNCopBISMpNA51nZAGjxfzJmZAQ36BZCtDZChVhvgdAZAbf01e9sUqXiCK35XbbVg56DA7F4XmVx1CZBIlp2rYZCOj2rzJRnr4UCipZBO9u0wNHiZBi1QdYgtVqwY9UZBUbLffy0DnXQqAphCQSEbG0a6Jd5CDSEWA7plksDIkib2MLnthtyn4HKwvyACPhR2ndsMqq4QiZA"
     }
 
     params = {
