@@ -10,10 +10,10 @@ import whatsapp_message
 
 """
     ? Extra Features:
-    * Added cropping of the face from the frame and saving it in a new folder.
+    * Added cropping of the face from the frame and saving it wiht a timestamp in a new folder.
     * Added additional checks to ensure that the face is big enough before saving it.
     * Dynamically update the faces list with the faces which are big enough.
-    * Added the popup window to display the saved face images.
+    * Added the popup window to display the saved face images from the saved folder.
     * WhatsApp integration to send the saved face images to a WhatsApp number.
 
 """
@@ -56,7 +56,7 @@ def saveImage(frame, x, y, w, h, time):
     if face.size == 0:
         return
 
-    # Write the time on the bottom of face image and save it
+    # Write the timestamp on the bottom of face image and save it
     face = cv2.putText(face, time, (10, y+h-60), cv2.FONT_HERSHEY_SIMPLEX,
                        0.5, (0, 255, 255), 2, cv2.LINE_AA)
 
@@ -66,7 +66,7 @@ def saveImage(frame, x, y, w, h, time):
     # Save the face image
     cv2.imwrite(f"./saved/face_{current_time}.jpg", face)
 
-    # Display the saved face image in a new window
+    # Pop up a window to display the saved face image
     cv2.imshow(f"Face {current_time}", face)
 
     # Send the image to whatsapp using a thread
@@ -121,7 +121,7 @@ def checkLineCrossing(faces, frame, line_y):
             cv2.putText(frame, "WARNING: Face crossed line!", (10, 100),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
-            # Save the face image only if the time interval has passed
+            # ? Save the face image only if the time interval has passed
             global last_save_time
             if time.time() - last_save_time >= time_interval:
                 saveImage(frame, x, y, w, h, time.ctime())
