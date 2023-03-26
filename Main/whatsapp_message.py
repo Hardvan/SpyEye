@@ -24,7 +24,7 @@ def UploadImage(path, timestamp):
     }
 
     response = requests.post(
-        f"https://graph.facebook.com/v13.0/113814568315440/media",
+        "https://graph.facebook.com/v13.0/113814568315440/media",
         headers=headers,
         params=params,
         files=files
