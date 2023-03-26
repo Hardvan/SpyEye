@@ -1,3 +1,7 @@
+# To run:
+# cd Main/
+# python intruder_det.py
+
 import cv2
 import numpy as np
 import time
