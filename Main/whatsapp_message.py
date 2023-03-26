@@ -68,7 +68,7 @@ def SendMessage(object_id, timestamp):
         data["type"] = "image"
         data["image"] = {
             "id": object_id,
-            "caption": f"Face detected at {timestamp}"
+            "caption": f"Face detected {timestamp}"
         }
 
     response = requests.post(url, headers=headers, data=json.dumps(data))

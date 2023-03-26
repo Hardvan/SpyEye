@@ -66,6 +66,7 @@ def saveImage(frame, x, y, w, h, time):
 
     # Convert the current time to a string
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+    current_time_formatted = datetime.now().strftime("on %B %d %Y, at %I:%M:%S %p")
 
     # Save the face image
     cv2.imwrite(f"./saved/face_{current_time}.jpg", face)
@@ -75,7 +76,7 @@ def saveImage(frame, x, y, w, h, time):
 
     # Send the image to whatsapp using a thread
     t = threading.Thread(target=ThreadSendImage, args=(
-        f"./saved/face_{current_time}.jpg", current_time))
+        f"./saved/face_{current_time}.jpg", current_time_formatted))
     t.start()
 
 
