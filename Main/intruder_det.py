@@ -76,7 +76,7 @@ def saveImage(frame, x, y, w, h, time):
 
 
 def ThreadSendImage(path, timestamp):
-    """Send the image to WhatsApp using a thread.
+    """Send the image to WhatsApp using a thread to prevent the program from freezing.
     """
 
     whatsapp_message.UploadImage(path, timestamp)
