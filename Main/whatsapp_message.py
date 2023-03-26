@@ -3,7 +3,10 @@ import requests
 import json
 
 # ! Refreshes every 24 hours
-bearer_token = "EABU7YlckmlkBALYtNCopBISMpNA51nZAGjxfzJmZAQ36BZCtDZChVhvgdAZAbf01e9sUqXiCK35XbbVg56DA7F4XmVx1CZBIlp2rYZCOj2rzJRnr4UCipZBO9u0wNHiZBi1QdYgtVqwY9UZBUbLffy0DnXQqAphCQSEbG0a6Jd5CDSEWA7plksDIkib2MLnthtyn4HKwvyACPhR2ndsMqq4QiZA"
+bearer_token = "EABU7YlckmlkBAMsENXZAV9JgpMiUWBS6rMldjFOqaF5zJHiprLYmDROcQba5LZAADC3RHRs8ZCVq0LIbUNqPKVNIbFZBTGg3cx9b3rZCVwVxYy50VEfXUarD8ajnyxycOQlt9jGjc6gBw5ELvfbttqXbUbWifW5mLtYo4Cq5vYpzxKAjDgSsfZC6qCvWWEmqtc9MDnsMjYRdlwTZBmZAmNYk"
+
+# ! Set to True if you want to refresh the token
+refreshed = False
 
 
 def UploadImage(path, timestamp):
@@ -53,20 +56,20 @@ def SendMessage(object_id, timestamp):
         "preview_url": False,
         "recipient_type": "individual",
         "to": f"91{hardik}",  # Start with 91 for Indian numbers
-        "type": "image",
-        "image": {
-            "id": object_id,
-            "caption": timestamp
-        }
-
-        # For first time:
-        # "type": "template",
-        # "template": {
-        #     "name": "hello_world",
-        #     "language": {
-        #         "code": "en_US" }
-
     }
+    if refreshed:  # If token is refreshed, send a template message
+        data["type"] = "template"
+        data["template"] = {
+            "name": "hello_world",
+            "language": {
+                "code": "en_US"}
+        }
+    else:
+        data["type"] = "image"
+        data["image"] = {
+            "id": object_id,
+            "caption": f"Face detected at {timestamp}"
+        }
 
     response = requests.post(url, headers=headers, data=json.dumps(data))
 
