@@ -3,7 +3,7 @@ import requests
 import json
 
 # ! Refreshes every 24 hours
-bearer_token = "EABU7YlckmlkBAMsENXZAV9JgpMiUWBS6rMldjFOqaF5zJHiprLYmDROcQba5LZAADC3RHRs8ZCVq0LIbUNqPKVNIbFZBTGg3cx9b3rZCVwVxYy50VEfXUarD8ajnyxycOQlt9jGjc6gBw5ELvfbttqXbUbWifW5mLtYo4Cq5vYpzxKAjDgSsfZC6qCvWWEmqtc9MDnsMjYRdlwTZBmZAmNYk"
+bearer_token = "EABU7YlckmlkBAIm44WHMXp7lSu5LL8mmy3cXjz3wWEI24UkzRZAYocXdatJHL8ZA8zNMHngHfrw6KXkJhdrnIYySwDTvtM6ImNC3ToZAWmSZCCUJlMbUkths0HZCDaqZB011ijZBMpQE6PqK6oQnkVGwXldny4grFj5icoNaqU2H8IKWtaqbfkSzXFc6YwnsDuehDkjnzA7bXYuQFkQ8AIn"
 
 # ! Set to True if you want to refresh the token
 refreshed = False
@@ -50,6 +50,7 @@ def SendMessage(object_id, timestamp):
 
     hardik = "9845072575"
     karan = "7348911401"
+    abhishek = "6360848034"
 
     data = {
         "messaging_product": "whatsapp",
