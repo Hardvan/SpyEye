@@ -1,4 +1,4 @@
-# To run:
+# To run this script, run the following commands in the terminal:
 # cd Main/
 # python intruder_det.py
 
@@ -22,31 +22,39 @@ import whatsapp_message
 
 """
 
-# Load the cascade classifier
-face_cascade = cv2.CascadeClassifier(
-    "../XML_Files/haarcascade_frontalface_default.xml")
+# --------------- GLOBAL VARIABLES  ------------------ #
 
-# Iterate through the images in saved folder and delete them
-# Set to False if you don't want to delete the images in saved folder
-delete_saved_images = True
-if delete_saved_images:
+# Intruder detection line
+LINE_Y = 200  # in pixels from the top
+
+# True/False: Send/Don't send the saved face images to WhatsApp
+WHATSAPP = False
+
+
+# True/False: Delete/Don't delete the saved face images in the saved folder
+DELETE_SAVED_IMAGES = True
+if DELETE_SAVED_IMAGES:
     for file in os.listdir("./saved"):
         os.remove(f"./saved/{file}")
 
 
 # Set the time interval between each face detection
-time_interval = 2
-last_save_time = time.time()
+TIME_INTERVAL = 2  # in seconds
+LAST_SAVE_TIME = time.time()  # To store the last time at which the face was saved
 
 
 def saveImage(frame, x, y, w, h, time):
-    """Save the face image with the timestamp on the bottom of the image,
-    display it in a new window and send it to WhatsApp.
+    """1. Save the face image with the timestamp on the bottom of the image
+    2. Display it in a new window
+    3. Send it to WhatsApp.
 
     Args:
         frame: The original frame from which the face is cropped.
         x, y, w, h: The coordinates of the face rectangle in the frame.
         time: The time at which the face was detected.
+
+    Returns:
+        None
     """
 
     # Check if detected face is big enough
@@ -74,14 +82,22 @@ def saveImage(frame, x, y, w, h, time):
     # Pop up a window to display the saved face image
     cv2.imshow(f"Face {current_time}", face)
 
-    # Send the image to whatsapp using a thread
-    t = threading.Thread(target=ThreadSendImage, args=(
-        f"./saved/face_{current_time}.jpg", current_time_formatted))
-    t.start()
+    if WHATSAPP:
+        # Send the image to whatsapp using a thread
+        t = threading.Thread(target=ThreadSendImage, args=(
+            f"./saved/face_{current_time}.jpg", current_time_formatted))
+        t.start()
 
 
 def ThreadSendImage(path, timestamp):
     """Send the image to WhatsApp using a thread to prevent the program from freezing.
+
+    Args:
+        path (str): The path of the image to be sent.
+        timestamp (str): The timestamp to be sent with the image.
+
+    Returns:
+        None
     """
 
     whatsapp_message.UploadImage(path, timestamp)
@@ -93,6 +109,9 @@ def drawRectangles(frame, faces):
     Args:
         frame: The frame on which the rectangles are to be drawn.
         faces: The list of faces detected in the frame.
+
+    Returns:
+        None
     """
 
     new_faces = []  # To store the faces which are big enough
@@ -100,7 +119,6 @@ def drawRectangles(frame, faces):
     # Display rectangles around the faces
     for i, (x, y, w, h) in enumerate(faces):
         if w > 50 and h > 50:  # Check if the face is big enough
-
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
             cv2.putText(frame, f"Face {i+1}", (x, y-10),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
@@ -110,71 +128,84 @@ def drawRectangles(frame, faces):
     # Update the faces list with the faces which are big enough
     faces = np.array(new_faces)
 
-    # Display the number of faces detected on the frame
-    cv2.putText(frame, f"Number of faces: {len(faces)}", (10, 50),
+    # Display the no. of faces detected on the frame
+    cv2.putText(frame, f"No. of faces: {len(faces)}", (10, 50),
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
 
-def checkLineCrossing(faces, frame, line_y):
+def checkLineCrossing(faces, frame, frame_copy):
     """Check if any face crosses the line and display a warning.
+
+    Args:
+        faces: The list of faces detected in the frame.
+        frame: The frame on which the warning is to be displayed.
+        frame_copy: The copy of the frame from which the face is cropped.
+
+    Returns:
+        None
     """
 
     for (x, y, w, h) in faces:
-
         # Check if the face crossed the line
-        if y < line_y:
+        if y < LINE_Y:
             cv2.putText(frame, "WARNING: Face crossed line!", (10, 720 - 100),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
 
             # ? Save the face image only if the time interval has passed
-            global last_save_time
-            if time.time() - last_save_time >= time_interval:
-                saveImage(frame, x, y, w, h, time.ctime())
-                last_save_time = time.time()
+            global LAST_SAVE_TIME
+            if time.time() - LAST_SAVE_TIME >= TIME_INTERVAL:
+                saveImage(frame_copy, x, y, w, h, time.ctime())
+                LAST_SAVE_TIME = time.time()
 
 
-# Open the webcam
-cap = cv2.VideoCapture(0)
+def main():
 
-# Set the resolution of the webcam
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
+    # Open the webcam
+    cap = cv2.VideoCapture(0)
 
-# Intruder detection line (200 pixels from the top)
-line_y = 200
+    # Set the resolution of the webcam
+    cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
+    cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
-while True:
+    while True:
 
-    ret, frame = cap.read()
+        ret, frame = cap.read()
 
-    frame_copy = frame.copy()  # To save cropped face image without white line and rectangle
+        frame_copy = frame.copy()  # To save cropped face image without white line and rectangle
 
-    # Draw a straight line at the top of the frame
-    cv2.line(frame, pt1=(0, line_y), pt2=(1280, line_y),
-             color=(255, 255, 255), thickness=2)
+        # Draw a straight line at the top of the frame
+        cv2.line(frame, pt1=(0, LINE_Y), pt2=(1280, LINE_Y),
+                 color=(255, 255, 255), thickness=2)
 
-    # Detect faces in the grayscale frame
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(
-        gray, scaleFactor=1.1, minNeighbors=5)
-    drawRectangles(frame, faces)
+        # Convert the frame to grayscale
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
-    # If any face crosses the line, display a warning
-    checkLineCrossing(faces, frame_copy, line_y)
+        # Load the cascade classifier
+        face_cascade = cv2.CascadeClassifier(
+            "../XML_Files/haarcascade_frontalface_default.xml")
 
-    cv2.imshow("Face Recognition", frame)
+        # Detect faces in the frame
+        faces = face_cascade.detectMultiScale(
+            gray, scaleFactor=1.1, minNeighbors=5)
 
-    if cv2.waitKey(1) & 0xFF == ord("q"):
-        break
+        # Draw rectangles around the faces and display the no. of faces detected
+        drawRectangles(frame, faces)
 
-# Release the webcam
-cap.release()
+        # If any face crosses the line, display a warning
+        checkLineCrossing(faces, frame, frame_copy)
 
-# Close the "Face Recognition" window
-cv2.destroyWindow("Face Recognition")
+        # Display the frame
+        cv2.imshow("Face Recognition", frame)
 
-# Wait for a key event to exit
-cv2.waitKey(0)
+        # Exit if "q" is pressed
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
 
-# Close all other windows
-cv2.destroyAllWindows()
+    cap.release()  # Release the webcam
+    cv2.destroyWindow("Face Recognition")  # Close the window
+    cv2.waitKey(0)  # Wait for a key event to exit
+    cv2.destroyAllWindows()  # Close all other windows
+
+
+if __name__ == "__main__":
+    main()

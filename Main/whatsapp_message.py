@@ -3,10 +3,10 @@ import requests
 import json
 
 # ! Refreshes every 24 hours
-bearer_token = "EABU7YlckmlkBAIm44WHMXp7lSu5LL8mmy3cXjz3wWEI24UkzRZAYocXdatJHL8ZA8zNMHngHfrw6KXkJhdrnIYySwDTvtM6ImNC3ToZAWmSZCCUJlMbUkths0HZCDaqZB011ijZBMpQE6PqK6oQnkVGwXldny4grFj5icoNaqU2H8IKWtaqbfkSzXFc6YwnsDuehDkjnzA7bXYuQFkQ8AIn"
+bearer_token = "EABdJMtlXegwBAItq4ZCMDOJbsjzkiw9ym76YImw4jZBbw00KFZBGpWJpkxuhIyBB8uylLVibdHW3WuUCDYqeM6XsFZAOUtKwUqnN966j0Rd4qWgDMbFt2uLsU87Fj6C5oDSC6zPYU0x3ZCry4M7KO7aZBHq9E24qFdpSpG9ZAJqG5GFoOPd8FJotcS9YYZCC0WZBZAevx4oIoBG3GKRfNlaCLP"
 
 # ! Set to True if you want to refresh the token
-refreshed = False
+refreshed = True
 
 
 def UploadImage(path, timestamp):
