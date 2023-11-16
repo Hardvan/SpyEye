@@ -34,13 +34,38 @@ WHATSAPP = False
 # True/False: Delete/Don't delete the saved face images in the saved folder
 DELETE_SAVED_IMAGES = True
 if DELETE_SAVED_IMAGES:
-    for file in os.listdir("./saved"):
-        os.remove(f"./saved/{file}")
+    for file in os.listdir("./saved/original"):
+        os.remove(f"./saved/original/{file}")
+    for file in os.listdir("./saved/canny"):
+        os.remove(f"./saved/canny/{file}")
 
 
 # Set the time interval between each face detection
 TIME_INTERVAL = 2  # in seconds
 LAST_SAVE_TIME = time.time()  # To store the last time at which the face was saved
+
+
+def cannyEdgeDetection(image_path):
+    """Perform canny edge detection and save the image under 'saved/canny' folder.
+
+    Args:
+        image_path (str): The path of the image to perform canny edge detection.
+
+    Returns:
+        None
+    """
+
+    # Read the image
+    image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+
+    # Perform canny edge detection
+    edges = cv2.Canny(image, 50, 150)
+
+    # Extract the file name and extension
+    file_name, file_extension = os.path.splitext(os.path.basename(image_path))
+
+    # Save the canny edge detection result under 'saved/canny' folder
+    cv2.imwrite(f"./saved/canny/{file_name}_canny{file_extension}", edges)
 
 
 def saveImage(frame, x, y, w, h, time):
@@ -76,16 +101,23 @@ def saveImage(frame, x, y, w, h, time):
     current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     current_time_formatted = datetime.now().strftime("on %B %d %Y, at %I:%M:%S %p")
 
-    # Save the face image
-    cv2.imwrite(f"./saved/face_{current_time}.jpg", face)
+    # Save the face image under "saved/original" folder
+    cv2.imwrite(f"./saved/original/face_{current_time}.jpg", face)
+    # Perform canny edge detection on the saved face image
+    cannyEdgeDetection(f"./saved/original/face_{current_time}.jpg")
 
     # Pop up a window to display the saved face image
     cv2.imshow(f"Face {current_time}", face)
+    # Pop up a window to display the canny edge detection result
+    canny_edge_detection_result = cv2.imread(
+        f"./saved/canny/face_{current_time}_canny.jpg")
+    cv2.imshow(
+        f"Canny Edge Detection Result {current_time}", canny_edge_detection_result)
 
     if WHATSAPP:
         # Send the image to whatsapp using a thread
         t = threading.Thread(target=ThreadSendImage, args=(
-            f"./saved/face_{current_time}.jpg", current_time_formatted))
+            f"./saved/original/face_{current_time}.jpg", current_time_formatted))
         t.start()
 
 
