@@ -50,6 +50,13 @@ This program uses OpenCV to detect faces in real-time using the webcam. When a f
    pip install -r requirements.txt
    ```
 
+   To see the program execution:
+
+   ```bash
+   cd Main
+   python intruder_det.py
+   ```
+
 6. Create a new branch
 
    ```bash
