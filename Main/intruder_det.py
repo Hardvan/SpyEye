@@ -68,6 +68,8 @@ def cannyEdgeDetection(image_path):
     # Save the canny edge detection result under 'saved/canny' folder
     cv2.imwrite(f"./saved/canny/{file_name}_canny{file_extension}", edges)
 
+    return edges
+
 
 def saveImage(frame, x, y, w, h, time):
     """1. Save the face image with the timestamp on the bottom of the image
@@ -104,18 +106,16 @@ def saveImage(frame, x, y, w, h, time):
 
     # Save the face image under "saved/original" folder
     cv2.imwrite(f"./saved/original/face_{current_time}.jpg", face)
-    # Perform canny edge detection on the saved face image
-    cannyEdgeDetection(f"./saved/original/face_{current_time}.jpg")
+    # Save the canny edge detection result under "saved/canny" folder
+    canny_face = cannyEdgeDetection(
+        f"./saved/original/face_{current_time}.jpg")
 
     print(f"✅ Face saved at {current_time}")
 
     # Pop up a window to display the saved face image
     cv2.imshow(f"Face {current_time}", face)
     # Pop up a window to display the canny edge detection result
-    canny_edge_detection_result = cv2.imread(
-        f"./saved/canny/face_{current_time}_canny.jpg")
-    cv2.imshow(
-        f"Canny Edge Detection Result {current_time}", canny_edge_detection_result)
+    cv2.imshow(f"Canny Edge {current_time}", canny_face)
 
     if WHATSAPP:
         # Send the image to whatsapp using a thread
