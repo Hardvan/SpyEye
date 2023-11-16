@@ -14,7 +14,7 @@ import whatsapp_message
 
 """
     ? Extra Features:
-    * Added cropping of the face from the frame and saving it wiht a timestamp in a new folder.
+    * Added cropping of the face from the frame and saving it with a timestamp in a new folder.
     * Added additional checks to ensure that the face is big enough before saving it.
     * Dynamically update the faces list with the faces which are big enough.
     * Added the popup window to display the saved face images from the saved folder.
