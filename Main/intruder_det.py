@@ -8,6 +8,7 @@ import time
 from datetime import datetime
 import os
 import threading
+import matplotlib.pyplot as plt
 
 # Custom modules
 import whatsapp_message
@@ -106,6 +107,8 @@ def saveImage(frame, x, y, w, h, time):
     # Perform canny edge detection on the saved face image
     cannyEdgeDetection(f"./saved/original/face_{current_time}.jpg")
 
+    print(f"✅ Face saved at {current_time}")
+
     # Pop up a window to display the saved face image
     cv2.imshow(f"Face {current_time}", face)
     # Pop up a window to display the canny edge detection result
@@ -190,6 +193,49 @@ def checkLineCrossing(faces, frame, frame_copy):
                 LAST_SAVE_TIME = time.time()
 
 
+def displayImagesSideBySide(original_folder, canny_folder):
+    """Display images side by side from the 'original' and 'canny' subfolders.
+
+    Args:
+        original_folder (str): Path to the 'original' subfolder.
+        canny_folder (str): Path to the 'canny' subfolder.
+
+    Returns:
+        None
+    """
+
+    # Get the list of files in the 'original' folder
+    original_files = os.listdir(original_folder)
+
+    # Iterate through the files in the 'original' folder
+    for original_file in original_files:
+
+        # Construct the paths for the original and canny images
+        original_path = os.path.join(original_folder, original_file)
+        canny_file = original_file.replace('.jpg', '_canny.jpg')
+        canny_path = os.path.join(canny_folder, canny_file)
+
+        # Read the original and canny images
+        original_image = cv2.imread(original_path)
+        canny_image = cv2.imread(canny_path, cv2.IMREAD_GRAYSCALE)
+
+        # Resize the canny image to match the original image dimensions
+        canny_image = cv2.resize(
+            canny_image, (original_image.shape[1], original_image.shape[0]))
+
+        # Display the images side by side using matplotlib
+        plt.figure(figsize=(10, 5))
+        plt.subplot(1, 2, 1)
+        plt.imshow(cv2.cvtColor(original_image, cv2.COLOR_BGR2RGB))
+        plt.title('Original Image')
+
+        plt.subplot(1, 2, 2)
+        plt.imshow(canny_image, cmap='gray')
+        plt.title('Canny Edge Detection')
+
+        plt.show()
+
+
 def main():
 
     # Open the webcam
@@ -237,6 +283,13 @@ def main():
     cv2.destroyWindow("Face Recognition")  # Close the window
     cv2.waitKey(0)  # Wait for a key event to exit
     cv2.destroyAllWindows()  # Close all other windows
+
+    print("Do you want to see the saved images (original) and (canny) side by side (y/n)?: ")
+    choice = input()
+    if choice in ["y", "Y"]:
+        displayImagesSideBySide("./saved/original", "./saved/canny")
+    else:
+        print("Exiting...")
 
 
 if __name__ == "__main__":
