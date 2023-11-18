@@ -6,7 +6,7 @@ import os
 
 # Load the cascade classifier
 face_cascade = cv2.CascadeClassifier(
-    "../XML_Files/haarcascade_frontalface_default.xml")
+    "../../XML_Files/haarcascade_frontalface_default.xml")
 
 # Iterate through the images in saved folder and delete them
 # Set to False if you don't want to delete the images in saved folder
