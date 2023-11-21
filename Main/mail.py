@@ -29,7 +29,7 @@ subject = "Intruder Alert"
 
 # Define the email function (dont call it email!)
 def send_emails(path):
-    email_list = ["treemusketeers32@gmail.com"]
+    email_list = ["treemusketeers32@gmail.com", "harshitdhoot.cs21@rvce.edu.in", "hardikhpawar.cs21@rvce.edu.in", "abhishekyadav.cs21@rvce.edu.in "]
 
     for person in email_list:
 
