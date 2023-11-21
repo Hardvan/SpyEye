@@ -3,7 +3,7 @@ import requests
 import json
 
 # ! Refreshes every 24 hours
-bearer_token = "EABdJMtlXegwBAItq4ZCMDOJbsjzkiw9ym76YImw4jZBbw00KFZBGpWJpkxuhIyBB8uylLVibdHW3WuUCDYqeM6XsFZAOUtKwUqnN966j0Rd4qWgDMbFt2uLsU87Fj6C5oDSC6zPYU0x3ZCry4M7KO7aZBHq9E24qFdpSpG9ZAJqG5GFoOPd8FJotcS9YYZCC0WZBZAevx4oIoBG3GKRfNlaCLP"
+bearer_token = "EABU7YlckmlkBO644SkY71pDvD4rEfgblqpIvo9JqR94IfK2oN3wkeSxJNkzJo3wYEy6R9nznrDrhrjZB3LoTn95CfZC1prLvKsBZBx8U0j80pZAdS9miu13fzZA9nZCG25qZBGKEKVs2BhcYHd83kfuuXfhnNRK95cJZBdMR8PcfCMW4isZAJnxqDxEehjyxibEu2ujhKmiXIfituyZAfzzk2iHgXE40cZD"
 
 # ! Set to True if you want to refresh the token
 refreshed = True
