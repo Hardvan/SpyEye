@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 
 # Custom modules
 import whatsapp_message
+import mail
 
 """
     ? Extra Features:
@@ -29,7 +30,7 @@ import whatsapp_message
 LINE_Y = 200  # in pixels from the top
 
 # True/False: Send/Don't send the saved face images to WhatsApp
-WHATSAPP = False
+WHATSAPP = True
 
 
 # True/False: Delete/Don't delete the saved face images in the saved folder
@@ -136,6 +137,7 @@ def ThreadSendImage(path, timestamp):
     """
 
     whatsapp_message.UploadImage(path, timestamp)
+    mail.send_emails(path)
 
 
 def drawRectangles(frame, faces):
