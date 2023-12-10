@@ -24,14 +24,13 @@ import mail
 
 """
 
-# --------------- GLOBAL VARIABLES  ------------------ #
+# ? --------------- GLOBAL VARIABLES  ------------------ #
 
 # Intruder detection line
 LINE_Y = 200  # in pixels from the top
 
-# True/False: Send/Don't send the saved face images to WhatsApp
-WHATSAPP = True
-
+WHATSAPP = False  # True/False: Send/Don't send the saved face images to WhatsApp
+MAIL = True  # True/False: Send/Don't send the saved face images to email
 
 # True/False: Delete/Don't delete the saved face images in the saved folder
 DELETE_SAVED_IMAGES = True
@@ -41,10 +40,11 @@ if DELETE_SAVED_IMAGES:
     for file in os.listdir("./saved/canny"):
         os.remove(f"./saved/canny/{file}")
 
-
 # Set the time interval between each face detection
 TIME_INTERVAL = 2  # in seconds
 LAST_SAVE_TIME = time.time()  # To store the last time at which the face was saved
+
+# ---------------------------------------------------- #
 
 
 def cannyEdgeDetection(image_path):
@@ -120,9 +120,14 @@ def saveImage(frame, x, y, w, h, time):
 
     if WHATSAPP:
         # Send the image to whatsapp using a thread
-        t = threading.Thread(target=ThreadSendImage, args=(
+        t_whatsapp = threading.Thread(target=ThreadSendImage, args=(
             f"./saved/original/face_{current_time}.jpg", current_time_formatted))
-        t.start()
+        t_whatsapp.start()
+    if MAIL:
+        # Send the image to email using a thread
+        t_mail = threading.Thread(target=ThreadSendMail, args=(
+            f"./saved/original/face_{current_time}.jpg",))
+        t_mail.start()
 
 
 def ThreadSendImage(path, timestamp):
@@ -131,12 +136,18 @@ def ThreadSendImage(path, timestamp):
     Args:
         path (str): The path of the image to be sent.
         timestamp (str): The timestamp to be sent with the image.
-
-    Returns:
-        None
     """
 
     whatsapp_message.UploadImage(path, timestamp)
+
+
+def ThreadSendMail(path):
+    """Send the image to email using a thread to prevent the program from freezing.
+
+    Args:
+        path (str): The path of the image to be sent.
+    """
+
     mail.send_emails(path)
 
 
