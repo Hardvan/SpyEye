@@ -24,7 +24,7 @@ pswd = "dosi juxf dbjx mgeb"
 
 
 # name the email subject
-subject = "Intruder Alert"
+subject = "Test Mail: Intruder Detected"
 
 
 # Define the email function (dont call it email!)
@@ -42,8 +42,17 @@ def send_emails(path):
 
         # Make the body of the email
         body = """
-        Recent intrusion detected
-        PFA a picture of the intruder
+        Dear Team,
+
+        We have detected a recent intrusion, and we wanted to inform you immediately.
+        Attached to this email is a picture of the intruder for your reference.
+
+        If you have any concerns or need further information, please don't hesitate to reach out.
+        
+        PS: This is a test email. No action is required from your side.
+
+        Best regards,
+        SpyEye Team
         """
 
         # make a MIME object to define parts of the email
