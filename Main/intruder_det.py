@@ -33,7 +33,7 @@ WHATSAPP = False  # Send/Don't send the saved face images to WhatsApp
 MAIL = False  # Send/Don't send the saved face images to email
 
 # Delete/Don't delete the saved face images in the saved folder
-DELETE_SAVED_IMAGES = False
+DELETE_SAVED_IMAGES = True
 if DELETE_SAVED_IMAGES:
     for file in os.listdir("./saved/original"):
         os.remove(f"./saved/original/{file}")
