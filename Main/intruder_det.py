@@ -21,7 +21,7 @@ import mail
     * Dynamically update the faces list with the faces which are big enough.
     * Added the popup window to display the saved face images from the saved folder.
     * WhatsApp integration to send the saved face images to a WhatsApp number.
-
+    * Email integration to send the saved face images to an email address.
 """
 
 # ? --------------- GLOBAL VARIABLES  ------------------ #
@@ -29,11 +29,11 @@ import mail
 # Intruder detection line
 LINE_Y = 200  # in pixels from the top
 
-WHATSAPP = False  # True/False: Send/Don't send the saved face images to WhatsApp
-MAIL = True  # True/False: Send/Don't send the saved face images to email
+WHATSAPP = False  # Send/Don't send the saved face images to WhatsApp
+MAIL = False  # Send/Don't send the saved face images to email
 
-# True/False: Delete/Don't delete the saved face images in the saved folder
-DELETE_SAVED_IMAGES = True
+# Delete/Don't delete the saved face images in the saved folder
+DELETE_SAVED_IMAGES = False
 if DELETE_SAVED_IMAGES:
     for file in os.listdir("./saved/original"):
         os.remove(f"./saved/original/{file}")
@@ -49,12 +49,11 @@ LAST_SAVE_TIME = time.time()  # To store the last time at which the face was sav
 
 def cannyEdgeDetection(image_path):
     """Perform canny edge detection and save the image under 'saved/canny' folder.
+    It helps to detect the edges of the face more clearly and accurately.
 
-    Args:
-        image_path (str): The path of the image to perform canny edge detection.
-
-    Returns:
-        None
+    Args
+    ----
+    - image_path: The path of the image to perform canny edge detection.
     """
 
     # Read the image
@@ -75,15 +74,13 @@ def cannyEdgeDetection(image_path):
 def saveImage(frame, x, y, w, h, time):
     """1. Save the face image with the timestamp on the bottom of the image
     2. Display it in a new window
-    3. Send it to WhatsApp.
+    3. Send it to WhatsApp and email if enabled.
 
-    Args:
-        frame: The original frame from which the face is cropped.
-        x, y, w, h: The coordinates of the face rectangle in the frame.
-        time: The time at which the face was detected.
-
-    Returns:
-        None
+    Args
+    ----
+    - frame: The original frame from which the face is cropped.
+    - x, y, w, h: The coordinates of the face rectangle in the frame.
+    - time: The time at which the face was detected.
     """
 
     # Check if detected face is big enough
@@ -118,13 +115,13 @@ def saveImage(frame, x, y, w, h, time):
     # Pop up a window to display the canny edge detection result
     cv2.imshow(f"Canny Edge {current_time}", canny_face)
 
+    # Send the image to whatsapp using a thread
     if WHATSAPP:
-        # Send the image to whatsapp using a thread
         t_whatsapp = threading.Thread(target=ThreadSendImage, args=(
             f"./saved/original/face_{current_time}.jpg", current_time_formatted))
         t_whatsapp.start()
+    # Send the image to email using a thread
     if MAIL:
-        # Send the image to email using a thread
         t_mail = threading.Thread(target=ThreadSendMail, args=(
             f"./saved/original/face_{current_time}.jpg",))
         t_mail.start()
@@ -133,9 +130,10 @@ def saveImage(frame, x, y, w, h, time):
 def ThreadSendImage(path, timestamp):
     """Send the image to WhatsApp using a thread to prevent the program from freezing.
 
-    Args:
-        path (str): The path of the image to be sent.
-        timestamp (str): The timestamp to be sent with the image.
+    Args
+    ----
+    - path: The path of the image to be sent.
+    - timestamp: The timestamp to be sent with the image.
     """
 
     whatsapp_message.UploadImage(path, timestamp)
@@ -144,27 +142,25 @@ def ThreadSendImage(path, timestamp):
 def ThreadSendMail(path):
     """Send the image to email using a thread to prevent the program from freezing.
 
-    Args:
-        path (str): The path of the image to be sent.
+    Args
+    ----
+    - path: The path of the image to be sent.
     """
 
     mail.send_emails(path)
 
 
 def drawRectangles(frame, faces):
-    """Display rectangles around the faces and the number of faces detected on the frame.
+    """Display rectangles around the faces and the no. of faces detected on the frame.
 
-    Args:
-        frame: The frame on which the rectangles are to be drawn.
-        faces: The list of faces detected in the frame.
-
-    Returns:
-        None
+    Args
+    ----
+    - frame: The frame on which the rectangles are to be drawn.
+    - faces: The list of faces detected in the frame.
     """
 
-    new_faces = []  # To store the faces which are big enough
-
     # Display rectangles around the faces
+    new_faces = []  # To store the faces which are big enough
     for i, (x, y, w, h) in enumerate(faces):
         if w > 50 and h > 50:  # Check if the face is big enough
             cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
@@ -184,17 +180,15 @@ def drawRectangles(frame, faces):
 def checkLineCrossing(faces, frame, frame_copy):
     """Check if any face crosses the line and display a warning.
 
-    Args:
-        faces: The list of faces detected in the frame.
-        frame: The frame on which the warning is to be displayed.
-        frame_copy: The copy of the frame from which the face is cropped.
-
-    Returns:
-        None
+    Args
+    ----
+    - faces: The list of faces detected in the frame.
+    - frame: The frame on which the warning is to be displayed.
+    - frame_copy: The copy of the frame from which the face is cropped.
     """
 
+    # Check if the face crossed the line
     for (x, y, w, h) in faces:
-        # Check if the face crossed the line
         if y < LINE_Y:
             cv2.putText(frame, "WARNING: Face crossed line!", (10, 720 - 100),
                         cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
@@ -209,23 +203,21 @@ def checkLineCrossing(faces, frame, frame_copy):
 def displayImagesSideBySide(original_folder, canny_folder):
     """Display images side by side from the 'original' and 'canny' subfolders.
 
-    Args:
-        original_folder (str): Path to the 'original' subfolder.
-        canny_folder (str): Path to the 'canny' subfolder.
-
-    Returns:
-        None
+    Args
+    ----
+    - original_folder: Path to the 'original' subfolder.
+    - canny_folder: Path to the 'canny' subfolder.
     """
 
     # Get the list of files in the 'original' folder
     original_files = os.listdir(original_folder)
 
     # Iterate through the files in the 'original' folder
-    for original_file in original_files:
+    for f in original_files:
 
         # Construct the paths for the original and canny images
-        original_path = os.path.join(original_folder, original_file)
-        canny_file = original_file.replace('.jpg', '_canny.jpg')
+        original_path = os.path.join(original_folder, f)
+        canny_file = f.replace('.jpg', '_canny.jpg')
         canny_path = os.path.join(canny_folder, canny_file)
 
         # Read the original and canny images
@@ -268,24 +260,22 @@ def main():
         cv2.line(frame, pt1=(0, LINE_Y), pt2=(1280, LINE_Y),
                  color=(255, 255, 255), thickness=2)
 
-        # Convert the frame to grayscale
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-
+        # 1) Detect faces in the frame
         # Load the cascade classifier
         face_cascade = cv2.CascadeClassifier(
             "../XML_Files/haarcascade_frontalface_default.xml")
-
-        # Detect faces in the frame
+        # Convert the frame to grayscale
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         faces = face_cascade.detectMultiScale(
             gray, scaleFactor=1.1, minNeighbors=5)
 
-        # Draw rectangles around the faces and display the no. of faces detected
+        # 2) Draw rectangles around the faces and display the no. of faces detected
         drawRectangles(frame, faces)
 
-        # If any face crosses the line, display a warning
+        # 3) If any face crosses the line, display a warning
         checkLineCrossing(faces, frame, frame_copy)
 
-        # Display the frame
+        # 4) Display the frame
         cv2.imshow("Face Recognition", frame)
 
         # Exit if "q" is pressed
