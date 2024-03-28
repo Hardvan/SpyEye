@@ -1,3 +1,4 @@
+
 # from email.message import EmailMessage
 # import ssl
 # import smtplib
@@ -32,6 +33,15 @@ from email import encoders
 # Setup port number and server name
 
 smtp_port = 587  # Standard secure SMTP port
+# Mail sent to : treemusketeers32@gmail.com
+# Password : Dhootkilillyput
+# Mail sent from : spyeyemusk42@gmail.com
+# Password : Dhootkilillyput
+
+
+# Setup port number and server name
+
+smtp_port = 587  # Standard secure SMTP port
 smtp_server = "smtp.gmail.com"  # Google SMTP Server
 
 # Set up the email lists
@@ -41,20 +51,34 @@ email_from = "spyeyemusk42@gmail.com"
 pswd = "yhxu glqz arlk ohng"  # As shown in the video this password is now dead, left in as example only
 
 # name the email subject
-subject = "New email from TIE with attachments!!"
+subject = "Test Mail: Intruder Detected"
 
 
 # Define the email function (dont call it email!)
 def send_emails(path):
-    email_list = ["treemusketeers32@gmail.com"]
+    group_mail = "treemusketeers32@gmail.com"
+    hardik_mail = "hardikhpawar.cs21@rvce.edu.in"
+    abhishek_mail = "abhishekyadav.cs21@rvce.edu.in"
+    harshit_mail = "harshitdhoot.cs21@rvce.edu.in"
+    karan_mail = "karansathish.cs21@rvce.edu.in"
+    email_list = ["treemusketeers32@gmail.com", hardik_mail]
+
+
 
     for person in email_list:
         # Make the body of the email
-        body = f"""
-        line 1
-        line 2
-        line 3
-        etc
+        body = """
+                Dear Team,
+
+                We have detected a recent intrusion, and we wanted to inform you immediately.
+                Attached to this email is a picture of the intruder for your reference.
+
+                If you have any concerns or need further information, please don't hesitate to reach out.
+
+                PS: This is a test email. No action is required from your side.
+
+                Best regards,
+                SpyEye Team
         """
 
         # make a MIME object to define parts of the email
@@ -65,11 +89,8 @@ def send_emails(path):
 
         # Attach the body of the message
         msg.attach(MIMEText(body, 'plain'))
-
-        # Define the file to attach
         filename = path
 
-        # Open the file in python as a binary
         attachment = open(filename, 'rb')  # r for read and b for binary
 
         # Encode as base 64
@@ -77,6 +98,8 @@ def send_emails(path):
         attachment_package.set_payload((attachment).read())
         encoders.encode_base64(attachment_package)
         attachment_package.add_header('Content-Disposition', "attachment; filename= " + filename)
+        attachment_package.add_header(
+            'Content-Disposition', "attachment; filename= " + filename)
         msg.attach(attachment_package)
 
         # Cast as string
@@ -94,6 +117,7 @@ def send_emails(path):
         print(f"Sending email to: {person}...")
         TIE_server.sendmail(email_from, person, text)
         print(f"Email sent to: {person}")
+        print(f"✅ Email sent to: {person}")
         print()
 
     # Close the port
