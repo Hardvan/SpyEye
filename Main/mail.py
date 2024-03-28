@@ -28,7 +28,7 @@ subject = "Test Mail: Intruder Detected"
 
 
 # Define the email function (dont call it email!)
-def send_emails(path):
+def send_emails(filename):
 
     group_mail = "treemusketeers32@gmail.com"
     hardik_mail = "hardikhpawar.cs21@rvce.edu.in"
@@ -36,7 +36,7 @@ def send_emails(path):
     harshit_mail = "harshitdhoot.cs21@rvce.edu.in"
     karan_mail = "karansathish.cs21@rvce.edu.in"
 
-    email_list = [group_mail]
+    email_list = [hardik_mail]
 
     for person in email_list:
 
@@ -63,9 +63,6 @@ def send_emails(path):
 
         # Attach the body of the message
         msg.attach(MIMEText(body, 'plain'))
-
-        # Define the file to attach
-        filename = path
 
         # Open the file in python as a binary
         attachment = open(filename, 'rb')  # r for read and b for binary

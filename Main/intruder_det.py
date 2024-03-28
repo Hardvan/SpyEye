@@ -29,8 +29,8 @@ import mail
 # Intruder detection line
 LINE_Y = 200  # in pixels from the top
 
-WHATSAPP = False  # Send/Don't send the saved face images to WhatsApp
-MAIL = False  # Send/Don't send the saved face images to email
+WHATSAPP = True  # Send/Don't send the saved face images to WhatsApp
+MAIL = True  # Send/Don't send the saved face images to email
 
 # Delete/Don't delete the saved face images in the saved folder
 DELETE_SAVED_IMAGES = True
