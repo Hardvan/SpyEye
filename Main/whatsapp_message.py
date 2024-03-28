@@ -3,10 +3,10 @@ import requests
 import json
 
 # ! Refreshes every 24 hours
-bearer_token = "EABU7YlckmlkBO644SkY71pDvD4rEfgblqpIvo9JqR94IfK2oN3wkeSxJNkzJo3wYEy6R9nznrDrhrjZB3LoTn95CfZC1prLvKsBZBx8U0j80pZAdS9miu13fzZA9nZCG25qZBGKEKVs2BhcYHd83kfuuXfhnNRK95cJZBdMR8PcfCMW4isZAJnxqDxEehjyxibEu2ujhKmiXIfituyZAfzzk2iHgXE40cZD"
+bearer_token = "EABU7YlckmlkBO6kaOe9QqjGoHyL5lfpUNlRk0Yf2pQWvldnS22oMjEmss9yKolDsXBcHDKYZAgGpmLE6nQ8ma4XauuKIw5rxmnAUuSUxZAN1VE6mSzeZAuIvmfavTUjvhpssYzC2iXYsIbLEvGTRHXd90IYucVYmenc81fSdGDk2HcAJOL2lWtIrvO23D5XF80kJ4mOAB5MG940tCMN2KlsxNcZD"
 
 # ! Set to True if you want to refresh the token
-refreshed = True
+refreshed = False
 
 
 def UploadImage(path, timestamp):
@@ -56,7 +56,7 @@ def SendMessage(object_id, timestamp):
         "messaging_product": "whatsapp",
         "preview_url": False,
         "recipient_type": "individual",
-        "to": f"91{hardik}",  # Start with 91 for Indian numbers
+        "to": f"91{karan}",  # Start with 91 for Indian numbers
     }
     if refreshed:  # If token is refreshed, send a template message
         data["type"] = "template"

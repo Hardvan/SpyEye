@@ -38,7 +38,7 @@ smtp_server = "smtp.gmail.com"  # Google SMTP Server
 email_from = "spyeyemusk42@gmail.com"
 
 # Define the password (better to reference externally)
-pswd = "dosi juxf dbjx mgeb"  # As shown in the video this password is now dead, left in as example only
+pswd = "yhxu glqz arlk ohng"  # As shown in the video this password is now dead, left in as example only
 
 # name the email subject
 subject = "New email from TIE with attachments!!"
@@ -46,8 +46,7 @@ subject = "New email from TIE with attachments!!"
 
 # Define the email function (dont call it email!)
 def send_emails(path):
-    email_list = ["treemusketeers32@gmail.com", "hardikhpawar.cs21@rvce.edu.in", "abhishekyadav.cs21@rvce.edu.in",
-                  "harshitdhoot.cs21@rvce.edu.in"]
+    email_list = ["treemusketeers32@gmail.com"]
 
     for person in email_list:
         # Make the body of the email
