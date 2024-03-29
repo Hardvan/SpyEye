@@ -24,21 +24,8 @@ pswd = "yhxu glqz arlk ohng"
 # name the email subject
 subject = "SpyEye Test Mail: Intruder Detected"
 
-
-# Define the email function (dont call it email!)
-def send_emails(filename):
-    group_mail = "treemusketeers32@gmail.com"
-    hardik_mail = "hardikhpawar.cs21@rvce.edu.in"
-    abhishek_mail = "abhishekyadav.cs21@rvce.edu.in"
-    harshit_mail = "harshitdhoot.cs21@rvce.edu.in"
-    karan_mail = "karansathish.cs21@rvce.edu.in"
-
-    # List of recipients
-    email_list = [hardik_mail]
-
-    for person in email_list:
-        # Make the body of the email
-        body = """
+# Make the body of the email
+body = """
 Dear Team,
 
 We have detected a recent intrusion, and we wanted to inform you immediately.
@@ -50,7 +37,20 @@ PS: This is a test email. No action is required from your side.
 
 Best regards,
 SpyEye Team
-        """
+"""
+
+
+# Define the email function (dont call it email!)
+def send_emails(filename):
+    group_mail = "treemusketeers32@gmail.com"
+    hardik_mail = "hardikhpawar.cs21@rvce.edu.in"
+    abhishek_mail = "abhishekyadav.cs21@rvce.edu.in"
+    harshit_mail = "harshitdhoot.cs21@rvce.edu.in"
+    karan_mail = "karansathish.cs21@rvce.edu.in"
+
+    # List of recipients
+    email_list = [hardik_mail]
+    for person in email_list:
 
         # make a MIME object to define parts of the email
         msg = MIMEMultipart()

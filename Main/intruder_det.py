@@ -68,7 +68,7 @@ if DELETE_SAVED_IMAGES:
         os.remove(f"./saved/canny/{file}")
 
 # Set the time interval between each face detection
-TIME_INTERVAL = 2  # in seconds
+TIME_INTERVAL = 3  # in seconds
 LAST_SAVE_TIME = time.time()  # To store the last time at which the face was saved
 
 # ---------------------------------------------------- #

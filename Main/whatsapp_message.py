@@ -72,30 +72,35 @@ def SendMessage(object_id, timestamp):
     abhishek = "6360848034"
     harshit = "8058076999"
 
-    # The number you want to send the message to
-    send_to = f"91{hardik}"  # Start with 91 for Indian numbers
+    # List of recipients
+    phone_list = [hardik]
+    for phone_number in phone_list:
 
-    data = {
-        "messaging_product": "whatsapp",
-        "preview_url": False,
-        "recipient_type": "individual",
-        "to": send_to,
-    }
-    if refreshed:  # If token is refreshed, send a template message
-        data["type"] = "template"
-        data["template"] = {
-            "name": "hello_world",
-            "language": {
-                "code": "en_US"}
-        }
-    else:  # If token is not refreshed, send an image message (normal message)
-        data["type"] = "image"
-        data["image"] = {
-            "id": object_id,
-            "caption": f"Face detected {timestamp}. Please check the image."
-        }
+        send_to = f"91{phone_number}"  # Start with 91 for Indian numbers
 
-    print(f"Sending WhatsApp message to: {send_to}...")
-    response = requests.post(url, headers=headers, data=json.dumps(data))
-    print(f"Response content: {response.content}")
-    print(f"✅ WhatsApp message sent to: {send_to}\n")
+        # Prepare the data to be sent
+        data = {
+            "messaging_product": "whatsapp",
+            "preview_url": False,
+            "recipient_type": "individual",
+            "to": send_to,
+        }
+        if refreshed:  # If token is refreshed, send a template message
+            data["type"] = "template"
+            data["template"] = {
+                "name": "hello_world",
+                "language": {
+                    "code": "en_US"}
+            }
+        # If token is not refreshed, send an image message (normal message)
+        else:
+            data["type"] = "image"
+            data["image"] = {
+                "id": object_id,
+                "caption": f"Face detected {timestamp}. Please check the image."
+            }
+
+        print(f"Sending WhatsApp message to: {send_to}...")
+        response = requests.post(url, headers=headers, data=json.dumps(data))
+        print(f"Response content: {response.content}")
+        print(f"✅ WhatsApp message sent to: {send_to}\n")
