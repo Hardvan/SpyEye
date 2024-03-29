@@ -74,4 +74,4 @@ def SendMessage(object_id, timestamp):
 
     response = requests.post(url, headers=headers, data=json.dumps(data))
 
-    print(response.content)
+    print(f"Response content: {response.content}")

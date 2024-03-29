@@ -1,29 +1,3 @@
-
-# from email.message import EmailMessage
-# import ssl
-# import smtplib
-
-# email_sender = 'spyeyemusk42@gmail.com'
-# email_password = 'dosi juxf dbjx mgeb'
-# email_receiver = 'treemusketeers32@gmail.com'
-#
-# subject = 'Intrusion Detected'
-# body = """
-# PFA the intruder's image
-# """
-#
-# em = EmailMessage()
-# em['From'] = email_sender
-# em['To'] = email_receiver
-# em['Subject'] = subject
-# em.set_content(body)
-#
-# context = ssl.create_default_context()
-#
-# with smtplib.SMTP_SSL('smtp.gmail.com',465, context = context) as smtp:
-#     smtp.login(email_sender, email_password)
-#     smtp.sendmail(email_sender, email_receiver, em.as_string())
-
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -31,7 +5,6 @@ from email.mime.base import MIMEBase
 from email import encoders
 
 # Setup port number and server name
-
 smtp_port = 587  # Standard secure SMTP port
 # Mail sent to : treemusketeers32@gmail.com
 # Password : Dhootkilillyput
@@ -40,7 +13,6 @@ smtp_port = 587  # Standard secure SMTP port
 
 
 # Setup port number and server name
-
 smtp_port = 587  # Standard secure SMTP port
 smtp_server = "smtp.gmail.com"  # Google SMTP Server
 
@@ -48,7 +20,8 @@ smtp_server = "smtp.gmail.com"  # Google SMTP Server
 email_from = "spyeyemusk42@gmail.com"
 
 # Define the password (better to reference externally)
-pswd = "yhxu glqz arlk ohng"  # As shown in the video this password is now dead, left in as example only
+# As shown in the video this password is now dead, left in as example only
+pswd = "yhxu glqz arlk ohng"
 
 # name the email subject
 subject = "Test Mail: Intruder Detected"
@@ -61,9 +34,9 @@ def send_emails(path):
     abhishek_mail = "abhishekyadav.cs21@rvce.edu.in"
     harshit_mail = "harshitdhoot.cs21@rvce.edu.in"
     karan_mail = "karansathish.cs21@rvce.edu.in"
-    email_list = ["treemusketeers32@gmail.com", hardik_mail]
 
-
+    # List of emails to send to
+    email_list = [hardik_mail]
 
     for person in email_list:
         # Make the body of the email
@@ -97,7 +70,8 @@ def send_emails(path):
         attachment_package = MIMEBase('application', 'octet-stream')
         attachment_package.set_payload((attachment).read())
         encoders.encode_base64(attachment_package)
-        attachment_package.add_header('Content-Disposition', "attachment; filename= " + filename)
+        attachment_package.add_header(
+            'Content-Disposition', "attachment; filename= " + filename)
         attachment_package.add_header(
             'Content-Disposition', "attachment; filename= " + filename)
         msg.attach(attachment_package)
