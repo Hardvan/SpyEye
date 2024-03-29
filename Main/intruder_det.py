@@ -26,7 +26,14 @@
 8. Exit if 'q' is pressed.
 9. Display the saved images (original) and (canny) side by side if the user wants to.
 
-* To run this script, run the following commands in the terminal:
+? Notable Features:
+* Cropping of the face from the frame & saving it with a timestamp in a new folder.
+* Additional checks to ensure that the face is big enough before saving it.
+* Popup window to display the saved face images from the saved folder.
+* WhatsApp integration to send the saved face images to a WhatsApp number.
+* Email integration to send the saved face images to an email address.
+
+? To run this script, run the following commands in the terminal:
 cd Main/
 python intruder_det.py
 """
@@ -43,15 +50,6 @@ import matplotlib.pyplot as plt
 import whatsapp_message
 import mail
 
-"""
-    ? Extra Features:
-    * Added cropping of the face from the frame and saving it with a timestamp in a new folder.
-    * Added additional checks to ensure that the face is big enough before saving it.
-    * Dynamically update the faces list with the faces which are big enough.
-    * Added the popup window to display the saved face images from the saved folder.
-    * WhatsApp integration to send the saved face images to a WhatsApp number.
-    * Email integration to send the saved face images to an email address.
-"""
 
 # ? --------------- GLOBAL VARIABLES  ------------------ #
 
@@ -77,7 +75,7 @@ LAST_SAVE_TIME = time.time()  # To store the last time at which the face was sav
 
 
 def cannyEdgeDetection(image_path):
-    """Perform canny edge detection and save the image under 'saved/canny' folder.
+    """Perform canny edge detection & save the image under 'saved/canny' folder.
     It helps to detect the edges of the face more clearly and accurately.
 
     Args
@@ -101,9 +99,10 @@ def cannyEdgeDetection(image_path):
 
 
 def saveImage(frame, x, y, w, h, time):
-    """1. Save the face image with the timestamp on the bottom of the image
-    2. Display it in a new window
-    3. Send it to WhatsApp and email if enabled.
+    """
+    1. Save the cropped face & canny images with the timestamp on the bottom of the image
+    2. Display it as a pop-up window
+    3. Send it to WhatsApp and email if flags are enabled
 
     Args
     ----
@@ -139,9 +138,8 @@ def saveImage(frame, x, y, w, h, time):
 
     print(f"✅ Face saved at {current_time}")
 
-    # Pop up a window to display the saved face image
+    # Pop up windows to display the face and canny edge detection result
     cv2.imshow(f"Face {current_time}", face)
-    # Pop up a window to display the canny edge detection result
     cv2.imshow(f"Canny Edge {current_time}", canny_face)
 
     # Send the image to whatsapp using a thread

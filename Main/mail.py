@@ -6,8 +6,6 @@ from email import encoders
 
 # Setup port number and server name
 smtp_port = 587  # Standard secure SMTP port
-# Mail sent to : treemusketeers32@gmail.com
-# Password : Dhootkilillyput
 # Mail sent from : spyeyemusk42@gmail.com
 # Password : Dhootkilillyput
 
@@ -16,7 +14,7 @@ smtp_port = 587  # Standard secure SMTP port
 smtp_port = 587  # Standard secure SMTP port
 smtp_server = "smtp.gmail.com"  # Google SMTP Server
 
-# Set up the email lists
+# Set up the sender email
 email_from = "spyeyemusk42@gmail.com"
 
 # Define the password (better to reference externally)
@@ -24,34 +22,34 @@ email_from = "spyeyemusk42@gmail.com"
 pswd = "yhxu glqz arlk ohng"
 
 # name the email subject
-subject = "Test Mail: Intruder Detected"
+subject = "SpyEye Test Mail: Intruder Detected"
 
 
 # Define the email function (dont call it email!)
-def send_emails(path):
+def send_emails(filename):
     group_mail = "treemusketeers32@gmail.com"
     hardik_mail = "hardikhpawar.cs21@rvce.edu.in"
     abhishek_mail = "abhishekyadav.cs21@rvce.edu.in"
     harshit_mail = "harshitdhoot.cs21@rvce.edu.in"
     karan_mail = "karansathish.cs21@rvce.edu.in"
 
-    # List of emails to send to
+    # List of recipients
     email_list = [hardik_mail]
 
     for person in email_list:
         # Make the body of the email
         body = """
-                Dear Team,
+Dear Team,
 
-                We have detected a recent intrusion, and we wanted to inform you immediately.
-                Attached to this email is a picture of the intruder for your reference.
+We have detected a recent intrusion, and we wanted to inform you immediately.
+Attached to this email is a picture of the intruder for your reference.
 
-                If you have any concerns or need further information, please don't hesitate to reach out.
+If you have any concerns or need further information, please don't hesitate to reach out.
 
-                PS: This is a test email. No action is required from your side.
+PS: This is a test email. No action is required from your side.
 
-                Best regards,
-                SpyEye Team
+Best regards,
+SpyEye Team
         """
 
         # make a MIME object to define parts of the email
@@ -62,8 +60,8 @@ def send_emails(path):
 
         # Attach the body of the message
         msg.attach(MIMEText(body, 'plain'))
-        filename = path
 
+        # Attach the attachment
         attachment = open(filename, 'rb')  # r for read and b for binary
 
         # Encode as base 64
@@ -84,10 +82,9 @@ def send_emails(path):
         TIE_server = smtplib.SMTP(smtp_server, smtp_port)
         TIE_server.starttls()
         TIE_server.login(email_from, pswd)
-        print("Succesfully connected to server")
-        print()
+        print("✅ Succesfully connected to server")
 
-        # Send emails to "person" as list is iterated
+        # Send email to the person
         print(f"Sending email to: {person}...")
         TIE_server.sendmail(email_from, person, text)
         print(f"✅ Email sent to: {person}\n")
