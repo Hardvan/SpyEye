@@ -52,11 +52,14 @@ def SendMessage(object_id, timestamp):
     karan = "7348911401"
     abhishek = "6360848034"
 
+    # The number you want to send the message to
+    send_to = f"91{hardik}"  # Start with 91 for Indian numbers
+
     data = {
         "messaging_product": "whatsapp",
         "preview_url": False,
         "recipient_type": "individual",
-        "to": f"91{hardik}",  # Start with 91 for Indian numbers
+        "to": send_to,
     }
     if refreshed:  # If token is refreshed, send a template message
         data["type"] = "template"
@@ -72,6 +75,7 @@ def SendMessage(object_id, timestamp):
             "caption": f"Face detected {timestamp}"
         }
 
+    print(f"Sending WhatsApp message to: {send_to}...")
     response = requests.post(url, headers=headers, data=json.dumps(data))
-
     print(f"Response content: {response.content}")
+    print(f"✅ WhatsApp message sent to: {send_to}\n")

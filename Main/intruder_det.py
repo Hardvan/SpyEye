@@ -1,6 +1,35 @@
-# To run this script, run the following commands in the terminal:
-# cd Main/
-# python intruder_det.py
+""" 
+? Functions present:
+* cannyEdgeDetection(image_path)
+* saveImage(frame, x, y, w, h, time)
+* ThreadSendImage(path, timestamp)
+* ThreadSendMail(path)
+* drawRectangles(frame, faces)
+* checkLineCrossing(faces, frame, frame_copy)
+* displayImagesSideBySide(original_folder, canny_folder)
+* main()
+
+? Program workflow:
+1. Open the webcam and set the resolution to 1280x720.
+2. Read the frame from the webcam.
+3. Draw a straight line at the top of the frame (intruder detection line).
+4. Face Detection:
+    - Load the cascade classifier for face detection.
+    - Convert the frame to grayscale.
+    - Detect the faces in the frame.
+5. Draw rectangles around the faces and display the no. of faces detected.
+6. If any face crosses the line:
+    - display a warning
+    - save the cropped face image with a timestamp & canny edge detection result
+    - send the saved face image to WhatsApp and email if enabled
+7. Display the frame.
+8. Exit if 'q' is pressed.
+9. Display the saved images (original) and (canny) side by side if the user wants to.
+
+* To run this script, run the following commands in the terminal:
+cd Main/
+python intruder_det.py
+"""
 
 import cv2
 import numpy as np
@@ -243,10 +272,8 @@ def displayImagesSideBySide(original_folder, canny_folder):
 
 def main():
 
-    # Open the webcam
+    # Open the webcam & set the resolution (1280x720)
     cap = cv2.VideoCapture(0)
-
-    # Set the resolution of the webcam
     cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1280)
     cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 720)
 
@@ -254,18 +281,19 @@ def main():
 
         ret, frame = cap.read()
 
-        frame_copy = frame.copy()  # To save cropped face image without white line and rectangle
+        frame_copy = frame.copy()  # To save cropped face image w/o white line & rectangle
 
-        # Draw a straight line at the top of the frame
+        # Draw a straight line at the top of the frame (intruder detection line)
         cv2.line(frame, pt1=(0, LINE_Y), pt2=(1280, LINE_Y),
                  color=(255, 255, 255), thickness=2)
 
-        # 1) Detect faces in the frame
+        # 1) Face Detection
         # Load the cascade classifier
         face_cascade = cv2.CascadeClassifier(
             "../XML_Files/haarcascade_frontalface_default.xml")
         # Convert the frame to grayscale
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        # Detect the faces in the frame
         faces = face_cascade.detectMultiScale(
             gray, scaleFactor=1.1, minNeighbors=5)
 

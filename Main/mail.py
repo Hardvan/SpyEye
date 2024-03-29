@@ -90,9 +90,7 @@ def send_emails(path):
         # Send emails to "person" as list is iterated
         print(f"Sending email to: {person}...")
         TIE_server.sendmail(email_from, person, text)
-        print(f"Email sent to: {person}")
-        print(f"✅ Email sent to: {person}")
-        print()
+        print(f"✅ Email sent to: {person}\n")
 
     # Close the port
     TIE_server.quit()
