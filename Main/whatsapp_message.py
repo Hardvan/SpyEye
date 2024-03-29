@@ -72,6 +72,13 @@ def SendMessage(object_id, timestamp):
     abhishek = "6360848034"
     harshit = "8058076999"
 
+    number_name_map = {
+        "9845072575": "Hardik",
+        "7348911401": "Karan",
+        "6360848034": "Abhishek",
+        "8058076999": "Harshit"
+    }
+
     # List of recipients
     phone_list = [hardik]
     for phone_number in phone_list:
@@ -100,7 +107,8 @@ def SendMessage(object_id, timestamp):
                 "caption": f"Face detected {timestamp}. Please check the image."
             }
 
-        print(f"Sending WhatsApp message to: {send_to}...")
+        person_name = number_name_map[phone_number]
+        print(f"Sending WhatsApp message to: {send_to} ({person_name})...")
         response = requests.post(url, headers=headers, data=json.dumps(data))
         print(f"Response content: {response.content}")
-        print(f"✅ WhatsApp message sent to: {send_to}\n")
+        print(f"✅ WhatsApp message sent to: {send_to} ({person_name})\n")
