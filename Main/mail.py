@@ -49,7 +49,7 @@ def send_emails(filename):
     karan_mail = "karansathish.cs21@rvce.edu.in"
 
     # List of recipients
-    email_list = [hardik_mail]
+    email_list = [hardik_mail, harshit_mail]
     for person in email_list:
 
         # make a MIME object to define parts of the email

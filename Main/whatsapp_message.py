@@ -80,7 +80,7 @@ def SendMessage(object_id, timestamp):
     }
 
     # List of recipients
-    phone_list = [hardik]
+    phone_list = [hardik, harshit]
     for phone_number in phone_list:
 
         send_to = f"91{phone_number}"  # Start with 91 for Indian numbers

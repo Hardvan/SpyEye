@@ -4,7 +4,7 @@ This program uses OpenCV to detect faces in real-time using the webcam. When a f
 
 ## Demonstration Video
 
-[![SpyEye Demo Video](./demo/thumbnail.png)](https://youtu.be/wXrzL3lbIl8)
+[![SpyEye Demo Video](./demo/thumbnail.png)](https://youtu.be/vapcstpVHJY)
 
 ## Requirements
 
