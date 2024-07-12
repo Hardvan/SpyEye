@@ -1,6 +1,6 @@
-# Face Recognition
+# SpyEye: Real-time Face Detection & Intrusion Alert System using Meta API & SMTP
 
-This program uses OpenCV to detect faces in real-time using the webcam. When a face is detected, the program displays a rectangle around the face and counts the number of faces in the frame. The program also draws a line at the top of the frame and displays a warning message when a face crosses the line. The program saves a cropped image of the detected face with a timestamp on it to a folder named "saved". The program can also display the saved images in a new window.
+This program leverages OpenCV to perform real-time face detection via the webcam. Upon detecting a face, it outlines the face with a rectangle and counts the number of faces within the frame. Additionally, it draws a line at the top of the frame and issues a warning message when a face crosses this line. The system saves a cropped image of the detected face, timestamped, in a designated "saved" folder. Furthermore, it provides the capability to display these saved images in a separate window.
 
 ## Demonstration Video
 
